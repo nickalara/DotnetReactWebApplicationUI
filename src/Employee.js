@@ -109,6 +109,9 @@ export class Employee extends Component {
     }
 
     //funcs to change fields
+    changeEmployeeID = (input) => {
+        this.setState({ EmployeeID: input.target.value });
+    }
     changeFirstName = (input) => {
         this.setState({ FirstName: input.target.value });
     }
@@ -123,6 +126,18 @@ export class Employee extends Component {
     }
     changeIsActive = (input) => {
         this.setState({ IsActive: input.target.value });
+    }
+    changeByCreated = (input) => {
+        this.setState({ ByCreated: input.target.value });
+    }
+    changeByUpdated = (input) => {
+        this.setState({ ByUpdated: input.target.value });
+    }
+    changeDateCreated = (input) => {
+        this.setState({ DateCreated: input.target.value });
+    }
+    changeDateUpdated = (input) => {
+        this.setState({ DateUpdated: input.target.value });
     }
     //May need to fix changeIsActive^^^
     //Note to self: add other fields for Employee later
@@ -158,10 +173,17 @@ export class Employee extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                EmployeeID: this.state.EmployeeID,
                 FirstName: this.state.FirstName,
                 LastName: this.state.LastName,
+                DepartmentID: this.state.DepartmentID,
                 HireDate: this.state.HireDate,
-                Picture: this.state.Picture
+                Picture: this.state.Picture,
+                IsActive: this.state.IsActive,
+                ByCreated: this.state.ByCreated,
+                ByUpdated: this.state.ByUpdated,
+                DateCreated: this.state.DateCreated,
+                DateUpdated: this.state.DateUpdated
             })
         })
             .then(res => res.json())
@@ -244,11 +266,11 @@ export class Employee extends Component {
             HireDate,
             PicturePath,
             Picture,
-            IsActive
-            // ByCreated,
-            // ByEdited,
-            // DateCreated,
-            // DateEdited
+            IsActive,
+            ByCreated,
+            ByEdited,
+            DateCreated,
+            DateUpdated
         } = this.state;
 
         return (
@@ -364,6 +386,7 @@ export class Employee extends Component {
                             <div className="modal-body">
                                 <div className="d-flex flex-row bd-highlight mb-3">
                                     <div className="p-2 w-50 bd-highlight">
+
                                         <div className="input-group mb-3">
                                             <span className="input-group-text">First Name</span>
                                             <input type="text" className="form-control"
@@ -376,25 +399,29 @@ export class Employee extends Component {
                                                 value={LastName}
                                                 onChange={this.changeLastName} />
                                         </div>
-
-                                        {/*vvvvvv FIX DROP DOWN AND DEPT FIELDS vvvvvv */}
+                                        {/* Need to fix EmployeeID update on backend */}
+                                        {/* <div className="input-group mb-3">
+                                            <span className="input-group-text">Employee ID</span>
+                                            <input type="number" className="form-control"
+                                                value={EmployeeID}
+                                                onChange={this.changeEmployeeID} />
+                                        </div> */}
                                         <div className="input-group mb-3">
-                                            <span className="input-group-text">Department ID</span>
+                                            <span className="input-group-text">DepartmentID</span>
                                             <select className="form-select"
                                                 onChange={this.changeDepartmentID}
-                                                value={departments}>
+                                                value={DepartmentID}>
                                                 {departments.map(dep => <option key={dep.DepartmentID}>
-                                                    {dep.DepartmentName}
+                                                    {dep.DepartmentID}
                                                 </option>)}
                                             </select>
                                         </div>
-                                        <div className="input-group mb-3">
+                                        {/* <div className="input-group mb-3">
                                             <span className="input-group-text">Department ID</span>
                                             <input type="text" className="form-control"
                                                 value={DepartmentID}
                                                 onChange={this.changeDepartmentID} />
-                                        </div>
-                                        {/*^^^^^^ FIX DROP DOWN AND DEPT FIELDS ^^^^^*/}
+                                        </div> */}
 
                                         <div className="input-group mb-3">
                                             <span className="input-group-text">Hire Date</span>
@@ -417,6 +444,30 @@ export class Employee extends Component {
                                         </div>
                                         {/* Add in the rest of the employee fields */}
 
+                                        <div className="input-group mb-3">
+                                            <span className="input-group-text">Created By</span>
+                                            <input type="text" className="form-control"
+                                                value={ByCreated}
+                                                onChange={this.changeByCreated} />
+                                        </div>
+                                        <div className="input-group mb-3">
+                                            <span className="input-group-text">Updated By</span>
+                                            <input type="text" className="form-control"
+                                                value={ByEdited}
+                                                onChange={this.changeByUpdated} />
+                                        </div>
+                                        <div className="input-group mb-3">
+                                            <span className="input-group-text">Date Created</span>
+                                            <input type="date" className="form-control"
+                                                value={DateCreated}
+                                                onChange={this.changeDateCreated} />
+                                        </div>
+                                        <div className="input-group mb-3">
+                                            <span className="input-group-text">Date Updated</span>
+                                            <input type="date" className="form-control"
+                                                value={DateUpdated}
+                                                onChange={this.changeDateUpdated} />
+                                        </div>
                                         <div className="p-2 w-50 bd-highlight">
                                             <img width="250px" height="250px"
                                                 src={PicturePath + Picture}
